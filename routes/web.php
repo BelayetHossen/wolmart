@@ -9,20 +9,23 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ShopController;
 use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\CurrencyController;
 use App\Http\Controllers\Backend\ShippingController;
 use App\Http\Controllers\Frontend\VendoreController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CustomerController;
 use App\Http\Controllers\Backend\AdminLoginController;
-use App\Http\Controllers\Backend\CurrencyController;
-use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Backend\ProductTagController;
 use App\Http\Controllers\Frontend\VendorShopController;
+use App\Http\Controllers\Backend\AdminCustomerController;
+use App\Http\Controllers\Backend\AdminVendorController;
 use App\Http\Controllers\Backend\ProductReviewController;
 use App\Http\Controllers\Frontend\ShoppingCartController;
 use App\Http\Controllers\Backend\ProductCategoryController;
-use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
 
 Route::group(['middleware' => 'admin'], function () {
@@ -69,7 +72,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('user-trash-restore/{id}', [UserController::class, 'trashRestoreUser']);
     Route::get('user-delete/{username}', [UserController::class, 'deleteUser']);
     Route::get('user-view/{id}', [UserController::class, 'singleUser']);
-    Route::get('user-settings', [UserController::class, 'userSettings'])->name('staff-user-setting');
+    Route::get('/account/settings', [UserController::class, 'userSettings'])->name('admin.setting.index');
+    Route::post('/account/update', [UserController::class, 'userSettingsUpdate']);
+    Route::get('/account/password/change', [UserController::class, 'userPasswordChange'])->name('admin.password.index');
+    Route::post('/account/password/update', [UserController::class, 'userPasswordUpdate']);
 
 
     /*
@@ -238,7 +244,56 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/admin/payment/update', [PaymentController::class, 'paymentUpdate']);
     Route::get('/admin/payment/delete/{id}', [PaymentController::class, 'paymentDelete']);
 
+    /*
+    |--------------------------------------------------------------------------
+    | Customer Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/admin/customer', [AdminCustomerController::class, 'index'])->name('admin.customer.index');
+    Route::get('/admin/customer/trashed', [AdminCustomerController::class, 'indexTrashed'])->name('admin.customer.trash');
+    Route::get('/admin/customer/all', [AdminCustomerController::class, 'allCustomers']);
+    Route::get('/admin/trashrd/customer/all', [AdminCustomerController::class, 'trashedCustomers']);
+    Route::post('/admin/customer/add', [AdminCustomerController::class, 'addCustomer']);
+    Route::get('/admin/customer/status/{id}', [AdminCustomerController::class, 'customerStatusChange']);
+    Route::get('/admin/customer/edit/{id}', [AdminCustomerController::class, 'customerEdit']);
+    Route::post('/admin/customer/update', [AdminCustomerController::class, 'customerUpdate']);
+    Route::get('/admin/customer/trash/restore/{id}', [AdminCustomerController::class, 'customerTrashRestore']);
+    Route::get('/admin/customer/delete/{id}', [AdminCustomerController::class, 'customerDelete']);
+    /*
+    |--------------------------------------------------------------------------
+    | Vendor Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/admin/vendor', [AdminVendorController::class, 'index'])->name('admin.vendor.index');
+    Route::get('/admin/vendor/trashed', [AdminVendorController::class, 'TrashedVendorIndex'])->name('trashed.vendor.index');
+    Route::get('/admin/vendor/all', [AdminVendorController::class, 'allvendors']);
+    Route::get('/admin/trashrd/vendor/all', [AdminVendorController::class, 'trashedvendors']);
+    Route::post('/admin/vendor/add', [AdminVendorController::class, 'addVendor']);
+    Route::get('/admin/vendor/status/{id}', [AdminVendorController::class, 'vendorStatus']);
+    Route::get('/admin/vendor/edit/{id}', [AdminVendorController::class, 'vendorEdit']);
+    Route::post('/admin/vendor/update', [AdminVendorController::class, 'vendorUpdate']);
+    Route::get('/admin/vendor/trash/restore/{id}', [AdminVendorController::class, 'vendorTrashRestore']);
+    Route::get('/admin/vendor/delete/{id}', [AdminVendorController::class, 'vendorDelete']);
+    /*
+    |--------------------------------------------------------------------------
+    | Order Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/admin/order', [OrderController::class, 'Index'])->name('admin.order.index');
+    Route::get('/admin/order/all', [OrderController::class, 'allOrders']);
+    Route::get('/admin/order/status/{id}/{value}', [OrderController::class, 'orderStatus']);
+    Route::get('/admin/order/details/{id}', [OrderController::class, 'orderDetails']);
+    Route::get('/admin/order/edit/{id}', [OrderController::class, 'orderEdit']);
+    Route::post('/admin/order/billing/update', [OrderController::class, 'billingUpdate']);
+    Route::post('/admin/order/shipping/update', [OrderController::class, 'shippingUpdate']);
+    Route::get('/admin/order/add', [OrderController::class, 'addOrder'])->name('admin.order.add');
+    Route::get('/admin/order/customer/email', [OrderController::class, 'getCustomerEmail']);
+    Route::get('/admin/order/product/get', [OrderController::class, 'getProduct']);
+    Route::post('/admin/order/create', [OrderController::class, 'createOrder']);
 });
+
+
+
 
 
 
@@ -312,22 +367,22 @@ Route::get('/customer/dashboard', [CustomerController::class, 'index'])->name('c
 | vendor routes
 |--------------------------------------------------------------------------
 */
-    Route::get('/vendor/login', [VendoreController::class, 'vendorLogin'])->name('vendor.login')->middleware('vendor');
-    Route::get('/vendor/dashboard', [VendoreController::class, 'dashboard'])->name('vendor.dashboard')->middleware('loggedin.vendor');
-    Route::get('/vendor/products/all', [VendoreController::class, 'allProducts'])->name('vendor.products.all')->middleware('loggedin.vendor');
-    Route::get('/vendor/product/create', [VendoreController::class, 'addProduct'])->name('vendor.add.product')->middleware('loggedin.vendor');
-    Route::get('/vendor/product/edit/{slug}', [VendoreController::class, 'editProduct'])->name('vendor.edit.product')->middleware('loggedin.vendor');
-    Route::post('/vendor/product/update', [VendoreController::class, 'updateProduct'])->name('vendor.update.product')->middleware('loggedin.vendor');
-    Route::get('/vendor/products', [VendoreController::class, 'vendorAllProducts'])->name('vendor.all.product')->middleware('loggedin.vendor');
-    Route::get('/vendor/products/delete/{id}', [VendoreController::class, 'productDelete'])->middleware('loggedin.vendor');
-    Route::post('/vendor/product/create', [VendoreController::class, 'productStore'])->middleware('loggedin.vendor');
-    Route::get('/vendor/account', [VendoreController::class, 'account'])->name('vendor.account')->middleware('loggedin.vendor');
-    Route::post('/vendor/account/update/{id}', [VendoreController::class, 'accountUpdate'])->middleware('loggedin.vendor');
-    Route::get('/vendor/shop/settings', [VendoreController::class, 'shopSettings'])->name('vendor.settings')->middleware('loggedin.vendor');
-    Route::post('/vendor/store/details/update', [VendorShopController::class, 'storeDetailsUpdate'])->middleware('loggedin.vendor');
-    Route::post('/vendor/account/details/update', [VendorShopController::class, 'accountDetailsUpdate'])->middleware('loggedin.vendor');
-    Route::get('/vendor/logobannershow', [VendoreController::class, 'logobannershow'])->middleware('loggedin.vendor');
-    Route::post('/vendor/logo-banner', [VendoreController::class, 'logoBanner'])->name('vendor.logoBanner')->middleware('loggedin.vendor');
+Route::get('/vendor/login', [VendoreController::class, 'vendorLogin'])->name('vendor.login')->middleware('vendor');
+Route::get('/vendor/dashboard', [VendoreController::class, 'dashboard'])->name('vendor.dashboard')->middleware('loggedin.vendor');
+Route::get('/vendor/products/all', [VendoreController::class, 'allProducts'])->name('vendor.products.all')->middleware('loggedin.vendor');
+Route::get('/vendor/product/create', [VendoreController::class, 'addProduct'])->name('vendor.add.product')->middleware('loggedin.vendor');
+Route::get('/vendor/product/edit/{slug}', [VendoreController::class, 'editProduct'])->name('vendor.edit.product')->middleware('loggedin.vendor');
+Route::post('/vendor/product/update', [VendoreController::class, 'updateProduct'])->name('vendor.update.product')->middleware('loggedin.vendor');
+Route::get('/vendor/products', [VendoreController::class, 'vendorAllProducts'])->name('vendor.all.product')->middleware('loggedin.vendor');
+Route::get('/vendor/products/delete/{id}', [VendoreController::class, 'productDelete'])->middleware('loggedin.vendor');
+Route::post('/vendor/product/create', [VendoreController::class, 'productStore'])->middleware('loggedin.vendor');
+Route::get('/vendor/account', [VendoreController::class, 'account'])->name('vendor.account')->middleware('loggedin.vendor');
+Route::post('/vendor/account/update/{id}', [VendoreController::class, 'accountUpdate'])->middleware('loggedin.vendor');
+Route::get('/vendor/shop/settings', [VendoreController::class, 'shopSettings'])->name('vendor.settings')->middleware('loggedin.vendor');
+Route::post('/vendor/store/details/update', [VendorShopController::class, 'storeDetailsUpdate'])->middleware('loggedin.vendor');
+Route::post('/vendor/account/details/update', [VendorShopController::class, 'accountDetailsUpdate'])->middleware('loggedin.vendor');
+Route::get('/vendor/logobannershow', [VendoreController::class, 'logobannershow'])->middleware('loggedin.vendor');
+Route::post('/vendor/logo-banner', [VendoreController::class, 'logoBanner'])->name('vendor.logoBanner')->middleware('loggedin.vendor');
 
 
 
@@ -379,6 +434,14 @@ Route::post('/product/cart/coupon/price/update', [ShoppingCartController::class,
 |--------------------------------------------------------------------------
 */
 Route::get('/product/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+/*
+|--------------------------------------------------------------------------
+| Order routes
+|--------------------------------------------------------------------------
+*/
+Route::post('/order/create', [OrderController::class, 'orderCreate']);
+Route::get('/product/order/{customer_id}/{orderNumber}', [OrderController::class, 'orderIndex'])->name('customer.product.order');
 
 
 

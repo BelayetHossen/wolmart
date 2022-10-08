@@ -25,8 +25,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="footer_iner text-center">
-                            <p>2022 © HOSTYSITE - Designed by <a href="#"> <i class="ti-heart"></i> </a><a
-                                    href="#"> BIPLOB</a></p>
+                            <p>2022 © HOSTYSITE - Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#">
+                                    BIPLOB</a></p>
                         </div>
                     </div>
                 </div>
@@ -36,8 +36,7 @@
     <div class="CHAT_MESSAGE_POPUPBOX">
         <div class="CHAT_POPUP_HEADER">
             <div class="MSEESAGE_CHATBOX_CLOSE">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M7.09939 5.98831L11.772 10.661C12.076 10.965 12.076 11.4564 11.772 11.7603C11.468 12.0643 10.9766 12.0643 10.6726 11.7603L5.99994 7.08762L1.32737 11.7603C1.02329 12.0643 0.532002 12.0643 0.228062 11.7603C-0.0760207 11.4564 -0.0760207 10.965 0.228062 10.661L4.90063 5.98831L0.228062 1.3156C-0.0760207 1.01166 -0.0760207 0.520226 0.228062 0.216286C0.379534 0.0646715 0.578697 -0.0114918 0.777717 -0.0114918C0.976738 -0.0114918 1.17576 0.0646715 1.32737 0.216286L5.99994 4.889L10.6726 0.216286C10.8243 0.0646715 11.0233 -0.0114918 11.2223 -0.0114918C11.4213 -0.0114918 11.6203 0.0646715 11.772 0.216286C12.076 0.520226 12.076 1.01166 11.772 1.3156L7.09939 5.98831Z"
                         fill="white" />
@@ -185,6 +184,9 @@
     <script src="{{ asset('') }}backend/js/product-review.js"></script>
     <script src="{{ asset('') }}backend/js/currency.js"></script>
     <script src="{{ asset('') }}backend/js/payment-gateway.js"></script>
+    <script src="{{ asset('') }}backend/js/order.js"></script>
+    <script src="{{ asset('') }}backend/js/customer.js"></script>
+    <script src="{{ asset('') }}backend/js/vendor.js"></script>
 </body>
 
 </html>

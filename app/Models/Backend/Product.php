@@ -39,10 +39,7 @@ class Product extends Model
         return $this->belongsTo(Vendor::class, 'vendor_id', 'id');
     }
 
-    public function getpublisher()
-    {
-        return $this->belongsTo(Siteuser::class, 'publisher_id', 'id');
-    }
+
     public function getReviews()
     {
         return $this->hasMany(ProductReview::class, 'product_id', 'id');

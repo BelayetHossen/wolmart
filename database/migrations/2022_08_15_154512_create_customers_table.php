@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('country');
             $table->string('region');
             $table->string('password');
+            $table->boolean('status');
+            $table->boolean('trash');
             $table->timestamps();
         });
     }

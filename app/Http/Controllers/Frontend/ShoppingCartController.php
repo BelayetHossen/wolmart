@@ -46,6 +46,7 @@ class ShoppingCartController extends Controller
             'weight'    => 5,
             'options'   => [
                 'image'     => $image[0],
+                'vendor_id'     => $product->getvendor->id,
             ],
 
         ]);
@@ -201,6 +202,7 @@ class ShoppingCartController extends Controller
             $shipping_price = $shipping->khul_price;
         }
         $total_price = $sub_total + $shipping_price;
+        Cookie::queue('shipping_id', $shipping->id, 1440);
         Cookie::queue('shipping_method', $shipping->title, 1440);
         Cookie::queue('shipping_addr', $request->region, 1440);
         Cookie::queue('shipping_price', $shipping_price, 1440);

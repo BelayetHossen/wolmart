@@ -36,8 +36,8 @@
                 beforeSend: function () {
                     $("body").prelodr({
                         prefixClass: "prelodr",
-                        show: function () {},
-                        hide: function () {},
+                        show: function () { },
+                        hide: function () { },
                     });
                     $("body").prelodr("in", "Processing... ");
                 },
@@ -160,14 +160,14 @@
 
             $.ajax({
                 url: "/product-img-delete/" + id + "/" + old_name,
-                success: function (data) {},
+                success: function (data) { },
             });
 
             // Show prelodr
             $("body").prelodr({
                 prefixClass: "prelodr",
-                show: function () {},
-                hide: function () {},
+                show: function () { },
+                hide: function () { },
             });
             $("body").prelodr("in", "Processing... Please wait...");
             $("body").prelodr("out", function (done) {
@@ -223,8 +223,8 @@
                 beforeSend: function () {
                     $("body").prelodr({
                         prefixClass: "prelodr",
-                        show: function () {},
-                        hide: function () {},
+                        show: function () { },
+                        hide: function () { },
                     });
                     $("body").prelodr("in", "Processing... Please wait...");
                 },
@@ -255,8 +255,8 @@
                 beforeSend: function () {
                     $("body").prelodr({
                         prefixClass: "prelodr",
-                        show: function () {},
-                        hide: function () {},
+                        show: function () { },
+                        hide: function () { },
                     });
                     $("body").prelodr("in", "Processing... Please wait...");
                 },
@@ -389,8 +389,8 @@
                 // Show prelodr
                 $("body").prelodr({
                     prefixClass: "prelodr",
-                    show: function () {},
-                    hide: function () {},
+                    show: function () { },
+                    hide: function () { },
                 });
                 $("body").prelodr("in", "Checking... Please wait...");
                 $("body").prelodr("out", function (done) {
@@ -542,8 +542,8 @@
                     beforeSend: function () {
                         $("body").prelodr({
                             prefixClass: "prelodr",
-                            show: function () {},
-                            hide: function () {},
+                            show: function () { },
+                            hide: function () { },
                         });
                         $("body").prelodr("in", "Sending email... ");
                     },
@@ -675,7 +675,13 @@
                             $(".update-content").html(msg2);
                         }
 
-                        $("#login_Modal").modal("show");
+                        if (response.user == 'admin') {
+                            window.location.href = "/admin";
+                        } else {
+                            $("#login_Modal").modal("show");
+                        }
+
+
                     },
                 });
             }

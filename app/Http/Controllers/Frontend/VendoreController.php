@@ -20,24 +20,24 @@ use App\Models\Backend\ProductCategoryGrandMother;
 class VendoreController extends Controller
 {
 
-     // vendor register page load
-     public function vendorRegister()
-     {
-         return view('frontend.pages.vendore.register');
-     }
+    // vendor register page load
+    public function vendorRegister()
+    {
+        return view('frontend.pages.vendore.register');
+    }
 
-     // vendor login page load
-     public function vendorLogin()
-     {
-         return view('frontend.pages.vendore.login');
-     }
-
-
+    // vendor login page load
+    public function vendorLogin()
+    {
+        return view('frontend.pages.vendore.login');
+    }
 
 
-     // vendor create account
-     public function store(Request $request)
-     {
+
+
+    // vendor create account
+    public function store(Request $request)
+    {
 
         $this->validate(
             $request,
@@ -88,7 +88,7 @@ class VendoreController extends Controller
 
 
         $store_name = Str::slug($request->store_name);
-        $store_url = '/agent/'.$store_name;
+        $store_url = '/agent/' . $store_name;
 
 
         Vendor::create([
@@ -111,10 +111,8 @@ class VendoreController extends Controller
             'status'        => false,
         ]);
 
-        return redirect()->route('vendor.login')->with('msg','Your account created successfully as agent ! login to access dashboard');
-
-
-     }
+        return redirect()->route('vendor.login')->with('msg', 'Your account created successfully as agent ! login to access dashboard');
+    }
 
     // vendor login system
     public function vendorLoginSystem(Request $request)
@@ -135,33 +133,32 @@ class VendoreController extends Controller
             Cookie::queue('vendor_email', $request->email, 1440);
             Cookie::queue('vendor_password', $request->password, 1440);
         }
-        if (Auth::guard('vendor')->attempt(['email' => $request->email , 'password' => $request->password])) {
+        if (Auth::guard('vendor')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->route('vendor.dashboard')->with('msg', 'You are succesfully login as our agent !');
         } else {
-            return redirect()->route('vendor.login')->with('msg','Login info is not correct !');
+            return redirect()->route('vendor.login')->with('msg', 'Login info is not correct !');
         }
     }
 
 
 
     // vendor logout system
-    public function vendorLogout(){
+    public function vendorLogout()
+    {
 
         Auth::guard('vendor')->logout();
-        return redirect()->route('vendor.login')->with('msg','You are log out ! You can login again bellow');
-
-
+        return redirect()->route('vendor.login')->with('msg', 'You are log out ! You can login again bellow');
     }
 
 
-     // vendor dashboard page load
-     public function dashboard()
-     {
+    // vendor dashboard page load
+    public function dashboard()
+    {
         $vendor = Auth::guard('vendor')->user();
-         return view('frontend.pages.vendore.dashboard',[
+        return view('frontend.pages.vendore.dashboard', [
             'vendor'   => $vendor
-         ]);
-     }
+        ]);
+    }
 
     // vendor product add page load
     public function addProduct()
@@ -176,11 +173,11 @@ class VendoreController extends Controller
         ]);
     }
 
-     // all products page load
-     public function allProducts()
-     {
-         return view('frontend.pages.vendore.all-products');
-     }
+    // all products page load
+    public function allProducts()
+    {
+        return view('frontend.pages.vendore.all-products');
+    }
 
 
     // product create
@@ -212,8 +209,8 @@ class VendoreController extends Controller
         );
 
 
-        $random_number = str_shuffle(time(). 'QWERTYUPASDFGHJKLZXCVBNM123456789qwertyupasdfghjkmnbvcxz');
-        $random_sku = substr(md5(rand()).$random_number, 5, 12);
+        $random_number = str_shuffle(time() . 'QWERTYUPASDFGHJKLZXCVBNM123456789qwertyupasdfghjkmnbvcxz');
+        $random_sku = substr(md5(rand()) . $random_number, 5, 12);
 
         $name = '';
         $gallery = [];
@@ -259,11 +256,8 @@ class VendoreController extends Controller
                 'image'                 =>      json_encode($gallery),
                 'status'                =>      false,
             ]);
-            return redirect()->route('vendor.products.all')->with('msg','Product added successfully, and under review');
+            return redirect()->route('vendor.products.all')->with('msg', 'Product added successfully, and under review');
         }
-
-
-
     }
 
 
@@ -276,42 +270,42 @@ class VendoreController extends Controller
 
             return datatables()->of(Product::where('trash', 0)->where('vendor_id', Auth::guard('vendor')->user()->id)->get())
 
-            ->addColumn('sl', function ($data) {
+                ->addColumn('sl', function ($data) {
 
-                //SL no genarate
-                $count = 1;
-                return $count = $count + 1;
-            })
+                    //SL no genarate
+                    $count = 1;
+                    return $count = $count + 1;
+                })
 
 
                 ->addColumn('title', function ($data) {
 
-                $img_arr = json_decode($data->image);
+                    $img_arr = json_decode($data->image);
 
-                $image_path = url('storage/products') . '/' . $img_arr[0];
+                    $image_path = url('storage/products') . '/' . $img_arr[0];
 
-                return '<img style="width:30px; margin-left:-30px;" src="' . $image_path . '">' . ' ' . $data->title;
-            })
+                    return '<img style="width:30px; margin-left:-30px;" src="' . $image_path . '">' . ' ' . $data->title;
+                })
 
                 ->addColumn('category', function ($data) {
 
-                return $data->mainCat->name;
-            })
+                    return $data->mainCat->name;
+                })
 
-            ->addColumn('brand', function ($data) {
+                ->addColumn('brand', function ($data) {
 
-                return $data->getBrand->name;
-            })
-            ->addColumn('price', function ($data) {
-                if ($data->sell_price) {
-                    $price = '<ins class="new-price">৳ '.$data->sell_price.'</ins>
-                                <del class="old-price">৳ '.$data->price.'</del>';
-                } else {
-                    $price = '<ins class="new-price">৳ '.$data->price.'</ins>';
-                }
+                    return $data->getBrand->name;
+                })
+                ->addColumn('price', function ($data) {
+                    if ($data->sell_price) {
+                        $price = '<ins class="new-price">৳ ' . $data->sell_price . '</ins>
+                                <del class="old-price">৳ ' . $data->price . '</del>';
+                    } else {
+                        $price = '<ins class="new-price">৳ ' . $data->price . '</ins>';
+                    }
 
-                return $price;
-            })
+                    return $price;
+                })
 
                 ->addColumn(
                     'status',
@@ -323,7 +317,6 @@ class VendoreController extends Controller
 
                         if ($data->status == 1) {
                             return '<p class="badge bg-success" style="font-size: 12px;">Active</p>';
-
                         } else {
                             return '<p class="badge bg-danger" style="font-size: 12px;">Inactive</p>';
                         }
@@ -368,9 +361,9 @@ class VendoreController extends Controller
 
 
 
-     // product edit page load
-     public function editProduct($slug)
-     {
+    // product edit page load
+    public function editProduct($slug)
+    {
         $product = Product::where('slug', $slug)->first();
         $tags = ProductTag::all();
         $cats_1 = ProductCategoryGrandMother::all();
@@ -388,10 +381,10 @@ class VendoreController extends Controller
             'product'          => $product,
             'images'          => $images,
         ]);
-     }
+    }
 
 
-     // product update
+    // product update
     public function updateProduct(Request $request)
     {
 
@@ -434,9 +427,7 @@ class VendoreController extends Controller
 
                 $inter = Image::make($img->getRealPath());
                 $inter->save(storage_path('app/public/products/') . $new_name);
-
             }
-
         }
 
         $new_name = array_merge($request->old_photos, $newGallery);
@@ -459,8 +450,6 @@ class VendoreController extends Controller
         $data->update();
 
         return redirect()->route('vendor.products.all')->with('msg', 'Product updated successfully and gone to review');
-
-
     }
 
 
@@ -507,18 +496,18 @@ class VendoreController extends Controller
         if ($data->logo == null) {
             $logo = url('backend/img/profile/upload-logo.jpg');
         } else {
-            $logo = url('storage/vendors').'/'.$data->logo;
+            $logo = url('storage/vendors') . '/' . $data->logo;
         }
         if ($data->banner == null) {
             $banner = url('backend/img/profile/upload-banner.jpg');
         } else {
-            $banner = url('storage/vendors').'/'.$data->banner;
+            $banner = url('storage/vendors') . '/' . $data->banner;
         }
 
         return view('frontend.pages.vendore.shop-settings', [
-            'data'          =>$data,
-            'logo'          =>$logo,
-            'banner'        =>$banner,
+            'data'          => $data,
+            'logo'          => $logo,
+            'banner'        => $banner,
         ]);
     }
 

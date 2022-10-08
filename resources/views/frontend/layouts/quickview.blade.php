@@ -84,7 +84,8 @@
                             <div class="product-qty-form mt-2">
                                 <div class="d-flex justify-content-between">
                                     <a class="quantity-minus w-icon-minus"></a>
-                                    <input name="product_qty" class="quantity form-control" type="number" min="1" max="100" value="1">
+                                    <input name="product_qty" class="quantity form-control" type="number" min="1"
+                                        max="100" value="1">
                                     <a class="quantity-plus w-icon-plus"></a>
                                 </div>
                             </div>
@@ -109,8 +110,7 @@
                     <span class="divider d-xs-show"></span>
                     <div class="product-link-wrapper d-flex">
                         <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"><span></span></a>
-                        <a href="#"
-                            class="btn-product-icon btn-compare btn-icon-left w-icon-compare"><span></span></a>
+                        <a href="#" class="btn-product-icon btn-compare btn-icon-left w-icon-compare"><span></span></a>
                     </div>
                 </div>
             </div>

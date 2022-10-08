@@ -8,23 +8,24 @@
             <div class="card-body">
                 <div class="white_card_header">
                     <div class="box_header m-0">
-                       <div class="main-title">
-                          <h3 class="m-0">All currency</h3>
-                       </div>
-                       <div class="main-title float-right mb-4">
-                           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#currency_add_modal">
-                               + Add new currency
-                           </button>
-                       </div>
+                        <div class="main-title">
+                            <h3 class="m-0">All currency</h3>
+                        </div>
+                        <div class="main-title float-right mb-4">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#currency_add_modal">
+                                + Add new currency
+                            </button>
+                        </div>
                     </div>
-                 </div>
+                </div>
 
                 <div class="table-responsive">
                     <table id="admin_currency_table" class="table">
                         <thead class="bg-dark text-white">
                             <tr>
-                                <th scope="col">SL</th>
-                                <th scope="col">Currency Name</th>
+                                <th scope="col">Sl</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Symbol</th>
                                 <th scope="col">Value</th>
                                 <th scope="col">Action</th>
@@ -49,48 +50,48 @@
         <div class="modal-content">
 
             <div class="modal-body">
-                    <form id="currency_add_form" method="POST">
-                        @csrf
-                        <div class="modal-header mb-3">
-                            <h5 class="modal-title">Add new currency</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal">
-                            </button>
+                <form id="currency_add_form" method="POST">
+                    @csrf
+                    <div class="modal-header mb-3">
+                        <h5 class="modal-title">Add new currency</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+
+                    <fieldset>
+
+                        <div class="form-group mb-3">
+                            <label for="name">Name</label>
+                            <input id="name" class="form-control" name="name" type="text">
                         </div>
+                        <span class="name-msg"></span>
+                        <span class="name-check"></span>
 
-                        <fieldset>
-
-                            <div class="form-group mb-3">
-                                <label for="name">Name</label>
-                                <input id="name" class="form-control" name="name" type="text">
-                            </div>
-                            <span class="name-msg"></span>
-                            <span class="name-check"></span>
-
-                            <div class="form-group mb-3">
-                                <label for="symbol">Symbol</label>
-                                <input id="symbol" class="form-control" name="symbol" type="text">
-                            </div>
-                            <span class="symbol-msg"></span>
-                            <div class="form-group mb-3">
-                                <label for="value">Value <small>(Please Enter The Value For 1 USD = ?)</small></label>
-                                <input id="value" class="form-control" name="value" type="text">
-                            </div>
-                            <span class="value-msg"></span>
-
-
-
-
-
-
-
-
-                        </fieldset>
+                        <div class="form-group mb-3">
+                            <label for="symbol">Symbol</label>
+                            <input id="symbol" class="form-control" name="symbol" type="text">
                         </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Add currency</button>
+                        <span class="symbol-msg"></span>
+                        <div class="form-group mb-3">
+                            <label for="value">Value <small>(Please Enter The Value For 1 USD = ?)</small></label>
+                            <input id="value" class="form-control" name="value" type="text">
                         </div>
-                    </form>
+                        <span class="value-msg"></span>
+
+
+
+
+
+
+
+
+                    </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add currency</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -140,12 +141,12 @@
 
 
                     </fieldset>
-                    </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add currency</button>
-                    </div>
-                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update currency</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>

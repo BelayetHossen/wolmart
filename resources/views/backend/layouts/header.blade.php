@@ -105,17 +105,17 @@
 
                     {{-- User photo show in top right in dashboard --}}
                     @php
-                        $img_name = Auth::guard('siteuser')->user()->photo;
-                        $img = '';
-                        if (Auth::guard('siteuser')->user()->photo == '') {
-                            if (Auth::guard('siteuser')->user()->gender == 'Male') {
-                                $img = asset('storage/gender_photo/male.jpg');
-                            } else {
-                                $img = asset('storage/gender_photo/female.jpg');
-                            }
-                        } else {
-                            $img = url('storage/users') . '/' . $img_name;
-                        }
+                    $img_name = Auth::guard('siteuser')->user()->photo;
+                    $img = '';
+                    if (Auth::guard('siteuser')->user()->photo == '') {
+                    if (Auth::guard('siteuser')->user()->gender == 'Male') {
+                    $img = asset('storage/gender_photo/male.jpg');
+                    } else {
+                    $img = asset('storage/gender_photo/female.jpg');
+                    }
+                    } else {
+                    $img = url('storage/users') . '/' . $img_name;
+                    }
                     @endphp
 
                     <div class="profile_info d-flex align-items-center">
@@ -131,8 +131,14 @@
                                 <p>{{ Auth::guard('siteuser')->user()->role->name }}</p>
                                 <h5>{{ Auth::guard('siteuser')->user()->name }}</h5>
                             </div>
+                            <style>
+                                .profile_info_details a:hover {
+                                    background: rgb(238, 238, 238);
+                                }
+                            </style>
                             <div class="profile_info_details bg-info">
-                                {{-- <a href="{{ route('staff-user-setting') }}">My Settings</a> --}}
+                                <a href="{{ route('admin.setting.index') }}">My Settings</a>
+                                <a href="{{ route('admin.password.index') }}">Change password</a>
                                 <a href="{{ route('admin.logout.system') }}">Log Out </a>
                             </div>
                         </div>

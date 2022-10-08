@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('gender')->nullable();
             $table->string('photo')->nullable();
+            $table->longText('social')->nullable();
             $table->boolean('status')->default(true);
             $table->boolean('trash')->default(false);
             $table->timestamps();

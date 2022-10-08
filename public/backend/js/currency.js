@@ -17,7 +17,7 @@
         | currency table to data table
         |--------------------------------------------------------------------------
         */
-       $('#admin_currency_table').dataTable({
+        $('#admin_currency_table').dataTable({
             processing: true,
             serverSide: true,
             ajax: {
@@ -46,14 +46,14 @@
                 },
             ],
 
-       });
+        });
 
         /*
         |--------------------------------------------------------------------------
         | currency add
         |--------------------------------------------------------------------------
         */
-        $(document).on('submit', '#currency_add_form', function(e){
+        $(document).on('submit', '#currency_add_form', function (e) {
             e.preventDefault();
             let name = $('#currency_add_form input[name="name"]').val();
             let symbol = $('#currency_add_form input[name="symbol"]').val();
@@ -94,8 +94,8 @@
                         } else {
                             $(".name-check").html("");
                             $('#admin_currency_table')
-                            .DataTable()
-                            .ajax.reload();
+                                .DataTable()
+                                .ajax.reload();
                             $("#currency_add_modal").modal("hide");
                             $("#currency_add_form")[0].reset();
                             Swal.fire({
@@ -143,8 +143,8 @@
         | currency update system
         |--------------------------------------------------------------------------
         */
-       $(document).on('submit', '#currency_edit_form', function(e){
-        e.preventDefault();
+        $(document).on('submit', '#currency_edit_form', function (e) {
+            e.preventDefault();
             let name = $('#currency_edit_form input[name="name"]').val();
             let symbol = $('#currency_edit_form input[name="symbol"]').val();
             let value = $('#currency_edit_form input[name="value"]').val();
@@ -184,8 +184,8 @@
                         } else {
                             $(".name-check").html("");
                             $('#admin_currency_table')
-                            .DataTable()
-                            .ajax.reload();
+                                .DataTable()
+                                .ajax.reload();
                             $("#currency_edit_modal").modal("hide");
                             Swal.fire({
                                 position: "top-end",
@@ -199,14 +199,14 @@
                 });
             }
 
-       })
+        })
         /*
         |--------------------------------------------------------------------------
         | currency delete system
         |--------------------------------------------------------------------------
         */
-       $(document).on('click', '.currency_delete_btn', function(e){
-        e.preventDefault();
+        $(document).on('click', '.currency_delete_btn', function (e) {
+            e.preventDefault();
             let id = $(this).attr('currency_delete_id');
             swal({
                 title: "Are you sure ?",
@@ -217,11 +217,11 @@
             }).then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
-                        url: "/admin/currency/delete/" +id,
+                        url: "/admin/currency/delete/" + id,
                         success: function (response) {
                             $('#admin_currency_table')
-                            .DataTable()
-                            .ajax.reload();
+                                .DataTable()
+                                .ajax.reload();
                             $("#currency_edit_modal").modal("hide");
                             Swal.fire({
                                 position: "top-end",
@@ -242,7 +242,7 @@
 
 
 
-       })
+        })
 
 
         //

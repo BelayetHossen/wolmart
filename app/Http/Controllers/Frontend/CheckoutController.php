@@ -20,6 +20,7 @@ class CheckoutController extends Controller
             'subtotal' => $subtotal,
             'payments' => $payments,
         ]);
+
     }
 
 }

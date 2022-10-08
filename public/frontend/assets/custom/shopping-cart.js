@@ -200,7 +200,22 @@
             }
         });
 
-        // 
+        // create account checkbox in checkout page
+        $(document).on('change', '.register_checkbox', function(event){
+            if (event.currentTarget.checked) {
+                $(".register_content").removeClass('hide');
+            } else {
+                $(".register_content").addClass('hide');
+            }
+        })
+        // defferent ship checkbox in checkout page
+        $(document).on('change', '.shipping_checkbox', function(event){
+            if (event.currentTarget.checked) {
+                $(".deff_ship_content").removeClass('hide');
+            } else {
+                $(".deff_ship_content").addClass('hide');
+            }
+        })
 
 
 

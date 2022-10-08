@@ -44,10 +44,6 @@
 
 
 <!-- role add Modal -->
-@php
-
-@endphp
-
 <div class="modal fade" id="role_add_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

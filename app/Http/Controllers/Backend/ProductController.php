@@ -34,42 +34,42 @@ class ProductController extends Controller
 
             return datatables()->of(Product::where('trash', 0)->get())
 
-            ->addColumn('sl', function ($data) {
+                ->addColumn('sl', function ($data) {
 
-                //SL no genarate
-                $count = 1;
-                return $count = $count + 1;
-            })
+                    //SL no genarate
+                    $count = 1;
+                    return $count = $count + 1;
+                })
 
 
                 ->addColumn('title', function ($data) {
 
-                $img_arr = json_decode($data->image);
+                    $img_arr = json_decode($data->image);
 
-                $image_path = url('storage/products') . '/' . $img_arr[0];
+                    $image_path = url('storage/products') . '/' . $img_arr[0];
 
-                return '<img style="width:35px; margin-left:-30px;" src="' . $image_path . '">' . ' ' . mb_strimwidth($data->title, 0, 25).'..';
-            })
+                    return '<img style="width:35px; margin-left:-30px;" src="' . $image_path . '">' . ' ' . mb_strimwidth($data->title, 0, 25) . '..';
+                })
 
                 ->addColumn('category', function ($data) {
 
-                return $data->mainCat->name;
-            })
+                    return $data->mainCat->name;
+                })
 
-            ->addColumn('brand', function ($data) {
+                ->addColumn('brand', function ($data) {
 
-                return $data->getBrand->name;
-            })
-            ->addColumn('price', function ($data) {
-                if ($data->sell_price) {
-                    $price = '<ins class="new-price">৳ '.$data->sell_price.'</ins>
-                                <del class="old-price">৳ '.$data->price.'</del>';
-                } else {
-                    $price = '<ins class="new-price">৳ '.$data->price.'</ins>';
-                }
+                    return $data->getBrand->name;
+                })
+                ->addColumn('price', function ($data) {
+                    if ($data->sell_price) {
+                        $price = '<ins class="new-price">৳ ' . $data->sell_price . '</ins>
+                                <del class="old-price">৳ ' . $data->price . '</del>';
+                    } else {
+                        $price = '<ins class="new-price">৳ ' . $data->price . '</ins>';
+                    }
 
-                return $price;
-            })
+                    return $price;
+                })
 
                 ->addColumn(
                     'status',
@@ -158,33 +158,33 @@ class ProductController extends Controller
 
                     $image_path = url('storage/products') . '/' . $img_arr[0];
 
-                    return '<img style="width:35px; margin-left:-30px;" src="' . $image_path . '">' . ' ' . mb_strimwidth($data->title, 0, 25).'..';
+                    return '<img style="width:35px; margin-left:-30px;" src="' . $image_path . '">' . ' ' . mb_strimwidth($data->title, 0, 25) . '..';
                 })
 
                 ->addColumn('category', function ($data) {
 
-                return $data->mainCat->name;
-            })
+                    return $data->mainCat->name;
+                })
 
-            ->addColumn('brand', function ($data) {
+                ->addColumn('brand', function ($data) {
 
-                return $data->getBrand->name;
-            })
-            ->addColumn('price', function ($data) {
+                    return $data->getBrand->name;
+                })
+                ->addColumn('price', function ($data) {
 
-                if ($data->sell_price) {
-                    $price = '<ins class="new-price">৳ '.$data->sell_price.'</ins>
-                                <del class="old-price">৳ '.$data->price.'</del>';
-                } else {
-                    $price = '<ins class="new-price">৳ '.$data->price.'</ins>';
-                }
+                    if ($data->sell_price) {
+                        $price = '<ins class="new-price">৳ ' . $data->sell_price . '</ins>
+                                <del class="old-price">৳ ' . $data->price . '</del>';
+                    } else {
+                        $price = '<ins class="new-price">৳ ' . $data->price . '</ins>';
+                    }
 
-                return $price;
-            })
+                    return $price;
+                })
 
                 ->addColumn(
                     'status',
-                        function ($data) {
+                    function ($data) {
 
                         //status btn checked unchecked
                         $status_check = $data->status ? 'checked' : '';
@@ -206,32 +206,32 @@ class ProductController extends Controller
                     'action',
                     function ($data) {
 
-                    //Action btn show by conditions
+                        //Action btn show by conditions
 
-                    $reeee = url('/product-edit/');
+                        $reeee = url('/product-edit/');
 
 
-                    if (
-                        $data->trash == 1
-                    ) {
+                        if (
+                            $data->trash == 1
+                        ) {
 
-                        $button = '';
+                            $button = '';
 
-                        $button .= '<a href="#" product_trash_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Restore" class="btn btn-success btn-sm product_trash_btn"><i class="fa fa-undo"></i></a> ';
-                        $button .= '<a href="#" product_delete_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Delete Permanently" class="btn btn-danger btn-sm product_delete_btn"><i class="fas fa-skull-crossbones"></i></a>';
-                        return $button;
-                    } else {
-                        $button = '';
+                            $button .= '<a href="#" product_trash_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Restore" class="btn btn-success btn-sm product_trash_btn"><i class="fa fa-undo"></i></a> ';
+                            $button .= '<a href="#" product_delete_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Delete Permanently" class="btn btn-danger btn-sm product_delete_btn"><i class="fas fa-skull-crossbones"></i></a>';
+                            return $button;
+                        } else {
+                            $button = '';
 
-                        $button .= '<a href="#" product_view_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="View" class="btn btn-warning btn-sm product_view_btn"><i class="fa fa-eye"></i></a> ';
+                            $button .= '<a href="#" product_view_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="View" class="btn btn-warning btn-sm product_view_btn"><i class="fa fa-eye"></i></a> ';
 
-                        $button .= '<a href="' . $reeee . '/' . $data->id . '" product_edit_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-warning btn-sm product_edit_btn"><i class="fa fa-edit"></i></a> ';
+                            $button .= '<a href="' . $reeee . '/' . $data->id . '" product_edit_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-warning btn-sm product_edit_btn"><i class="fa fa-edit"></i></a> ';
 
-                        $button .= '<a href="#" product_trash_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Move to trash" class="btn btn-danger btn-sm product_trash_btn"><i class="fa fa-trash"></i></a>';
-                        return $button;
+                            $button .= '<a href="#" product_trash_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Move to trash" class="btn btn-danger btn-sm product_trash_btn"><i class="fa fa-trash"></i></a>';
+                            return $button;
+                        }
                     }
-                }
-            )
+                )
 
                 ->rawColumns(['sl', 'title', 'category', 'brand', 'price', 'status', 'action'])->make();
         }
@@ -250,7 +250,7 @@ class ProductController extends Controller
         $tags = ProductTag::all();
         $cats_1 = ProductCategoryGrandMother::all();
         $brands = Brand::all();
-        $random_number = str_shuffle(time(). 'QWERTYUPASDFGHJKLZXCVBNM123456789');
+        $random_number = str_shuffle(time() . 'QWERTYUPASDFGHJKLZXCVBNM123456789');
         $random_sku = substr($random_number, 5, 8);
 
         return view('backend.pages.product.product.add-product', [
@@ -309,10 +309,12 @@ class ProductController extends Controller
                 'brand'                 =>      $request->product_brand,
                 'short_desc'            =>      $request->short_desc,
                 'long_desc'             =>      $request->long_desc,
+                'stock'                 =>      $request->stock,
                 'price'                 =>      $request->price,
                 'sell_price'            =>      $request->sell_price,
                 'featured'              =>      $request->featured,
                 'video'                 =>      $request->video,
+                'stock'                 =>      $request->stock,
                 'hot'                   =>      json_encode($request->hot),
                 'image'                 =>      json_encode($gallery),
             ]);
@@ -323,7 +325,7 @@ class ProductController extends Controller
 
     /*
 |--------------------------------------------------------------------------
-| 1. second category select
+| second category select
 |--------------------------------------------------------------------------
 */
     public function secondCatSelect($id)
@@ -368,14 +370,6 @@ class ProductController extends Controller
 
         $data = ProductCategoryGrandMother::find($id);
         return $data;
-
-
-        // $second_cat_list = '';
-        // $second_cat_list .= '<option value="">-Select a 2nd category-</option>';
-        // foreach ($data->secondCategory as $cat) {
-        //     $second_cat_list .= '<option value="' . $cat->id . '">' . $cat->name . '</option>';
-        // }
-        // return $second_cat_list;
     }
 
 
@@ -417,7 +411,6 @@ class ProductController extends Controller
 
                 $inter = Image::make($img->getRealPath());
                 $inter->save(storage_path('app/public/products/') . $new_name);
-
             }
 
             // foreach (json_decode($data->image) as $delete_img) {
@@ -461,23 +454,23 @@ class ProductController extends Controller
     }
 
 
-/*
+    /*
 |--------------------------------------------------------------------------
 | product status change
 |--------------------------------------------------------------------------
 */
-public function productStatus($id)
-{
+    public function productStatus($id)
+    {
 
-    $data = Product::find($id);
-    if ($data->status == true) {
-        $data->status = false;
-        $data->update();
-    } else {
-        $data->status = true;
-        $data->update();
+        $data = Product::find($id);
+        if ($data->status == true) {
+            $data->status = false;
+            $data->update();
+        } else {
+            $data->status = true;
+            $data->update();
+        }
     }
-}
 
 
 

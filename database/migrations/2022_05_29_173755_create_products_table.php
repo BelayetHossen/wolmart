@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('brand');
             $table->text('short_desc')->nullable();
             $table->longText('long_desc')->nullable();
+            $table->integer('stock')->nullable();
             $table->integer('price');
             $table->integer('sell_price')->nullable();
             $table->boolean('featured')->default(false);

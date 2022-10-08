@@ -16,7 +16,7 @@ class RoleController extends Controller
 |--------------------------------------------------------------------------
 */
 public function adminRoleView(){
-    $permission = ['Dashboard','User','Product','Post','Genarel settings','Order', 'Shipping settings'];
+    $permission = ['Dashboard','User','Product','Post','Genarel settings','Order', 'Shipping settings', 'Customer'];
     return view('backend.pages.roles.index',[
         'permission' => $permission
     ]);
@@ -163,7 +163,7 @@ public function deleteRole($id){
 |--------------------------------------------------------------------------
 */
 public function editRole($id){
-    $permission = ['Dashboard','User','Product','Post','Genarel settings','Order', 'Shipping settings'];
+    $permission = ['Dashboard','User','Product','Post','Genarel settings','Order', 'Shipping settings', 'Customer'];
     $data = Role::find($id);
 
 

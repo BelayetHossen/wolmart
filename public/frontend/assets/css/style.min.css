@@ -3622,14 +3622,14 @@ blockquote {
   color: #336699;
 }
 .card-header a::after, .card-header a::before {
-  position: absolute;
-  top: 50%;
-  right: 2rem;
-  margin-top: -0.1rem;
-  font-family: "wolmart";
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #333;
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    margin-top: 1.9rem;
+    font-family: "wolmart";
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #333;
 }
 .card-header a:hover {
   color: #336699;
@@ -18161,6 +18161,7 @@ body .product-popup {
 }
 .checkout .login-content,
 .checkout .coupon-content,
+.checkout .ck_register_content,
 .checkout .checkbox-content {
   display: none;
   margin-bottom: 2.4rem;
@@ -18205,6 +18206,16 @@ body .product-popup {
   line-height: 1.7;
 }
 .checkout .coupon-content .input-wrapper-inline {
+  max-width: 40rem;
+}
+.checkout .ck_register_content {
+  padding-bottom: 2rem;
+}
+.checkout .ck_register_content p {
+  margin-bottom: 1.9rem;
+  line-height: 1.7;
+}
+.checkout .ck_register_content .input-wrapper-inline {
   max-width: 40rem;
 }
 .checkout .btn-coupon {
@@ -18330,32 +18341,7 @@ body .product-popup {
   color: #666;
   font-weight: 400;
 }
-.order-summary .card-header a::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 18px;
-  height: 18px;
-  border: 1px solid #ccd;
-  border-radius: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-}
-.order-summary .card-header a::after {
-  content: "";
-  position: absolute;
-  left: 5px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #333;
-  opacity: 0;
-  -webkit-transition: opacity 0.4s;
-  transition: opacity 0.4s;
-}
-.order-summary .card-header a.collapse::after {
-  opacity: 1;
-}
+
 .order-summary .card-body {
   padding: 0 0 1.5rem;
 }

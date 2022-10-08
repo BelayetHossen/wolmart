@@ -18,26 +18,31 @@ class CurrencyController extends Controller
     {
         if (request()->ajax()) {
             return datatables()->of(Currency::all())
-            ->addColumn(
-                'action',
-                function ($data) {
-                    $button = '';
+                ->addColumn(
+                    'sl',
+                    function ($data) {
+                        return $data->id;
+                    }
+                )
+                ->addColumn(
+                    'action',
+                    function ($data) {
+                        $button = '';
 
-                    $button .= '<a href="#" currency_edit_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-warning btn-sm currency_edit_btn"><i class="fa fa-edit"></i></a> ';
+                        $button .= '<a href="#" currency_edit_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-warning btn-sm currency_edit_btn"><i class="fa fa-edit"></i></a> ';
 
-                    $button .= '<a href="#" currency_delete_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Delete" class="btn btn-danger btn-sm currency_delete_btn"><i class="fa fa-trash"></i></a>';
-                    return $button;
-
-                }
-            )
-            ->rawColumns(['action'])
-             ->make();
+                        $button .= '<a href="#" currency_delete_id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Delete" class="btn btn-danger btn-sm currency_delete_btn"><i class="fa fa-trash"></i></a>';
+                        return $button;
+                    }
+                )
+                ->rawColumns(['action'])
+                ->make();
         }
     }
     // currency Create
     public function currencyCreate(Request $request)
     {
-        $exist_name=  Currency::where('name', $request->name)->first();
+        $exist_name =  Currency::where('name', $request->name)->first();
 
         if (!empty($exist_name)) {
             return [
@@ -61,7 +66,7 @@ class CurrencyController extends Controller
     public function currencyUpdate(Request $request)
     {
         $data = Currency::find($request->id);
-        $exist_name=  Currency::where('name', $request->name)->first();
+        $exist_name =  Currency::where('name', $request->name)->first();
         if ($data->name != $request->name) {
             if (!empty($exist_name)) {
                 return [
