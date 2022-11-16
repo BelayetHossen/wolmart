@@ -4,8 +4,8 @@
 <main class="main">
 
 
-     <!-- Start of Breadcrumb -->
-     <nav class="breadcrumb-nav container">
+    <!-- Start of Breadcrumb -->
+    <nav class="breadcrumb-nav container">
         <ul class="breadcrumb bb-no py-4">
             <li><a href="{{ route('home.index') }}">Home</a></li>
             <li><a href="{{ route('vendor.dashboard') }}">vendor-dashboard</a></li>
@@ -17,14 +17,16 @@
 
 
     <style>
-        .custom ul li{
+        .custom ul li {
             border: 1px solid #eee;
         }
-        .custom ul li:hover{
+
+        .custom ul li:hover {
             background: rgb(189, 190, 202);
             color: rgb(255, 255, 255);
         }
-        .nav-tabs .nav-link{
+
+        .nav-tabs .nav-link {
             border: none;
         }
     </style>
@@ -92,20 +94,23 @@
         }
     </style>
     <style>
-        .img-show{
+        .img-show {
             position: relative;
             text-align: center;
 
         }
-        .img-show:hover{
+
+        .img-show:hover {
             opacity: 0.7;
 
         }
+
         .top-right {
             position: absolute;
             top: 0px;
             right: 15px;
         }
+
         .top-right a {
             font-size: 25px;
             color: #ec0000;
@@ -113,8 +118,9 @@
             border-radius: 20%;
             opacity: 0;
         }
-        .show-hide{
-            opacity: 1!important;
+
+        .show-hide {
+            opacity: 1 !important;
         }
     </style>
 
@@ -130,33 +136,43 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h4 class="mt-2">Upload a new product</h4>
-                            <a href="{{ route('vendor.products.all') }}" class="btn btn-primary btn-sm text-white">All products</a>
+                            <a href="{{ route('vendor.products.all') }}" class="btn btn-primary btn-sm text-white">All
+                                products</a>
                         </div>
                         <form action="{{ url('/vendor/product/create') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body row">
                                 <div class="col-md-8">
                                     <div class="mb-3">
-                                        <label for="title" class="form-label">Product title <span style="color:red;">*</span></label>
-                                        <input name="title" type="text" class="form-control" id="title" value="{{ old('title') }}">
+                                        <label for="title" class="form-label">Product title <span
+                                                style="color:red;">*</span></label>
+                                        <input name="title" type="text" class="form-control" id="title"
+                                            value="{{ old('title') }}">
                                         @error('title')
-                                            <p class="text-danger">{{ $message }}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <label for="short_desc" class="form-label">Product short description <span style="color:red;">*</span></label>
-                                        <textarea name="short_desc" class="form-control" id="short_desc" rows="3"> {{ old('short_desc') }}</textarea>
+                                        <label for="short_desc" class="form-label">Product short description <span
+                                                style="color:red;">*</span></label>
+                                        <textarea name="short_desc" class="form-control" id="short_desc"
+                                            rows="3"> {{ old('short_desc') }}</textarea>
                                         @error('short_desc')
-                                            <p class="text-danger">{{ $message }}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <label for="long_desc" class="form-label">Product long description <span style="color:red;">*</span></label>
-                                        <textarea name="long_desc" class="form-control" id="long_desc" rows="5">{{ old('long_desc') }}</textarea>
+                                        <label for="long_desc" class="form-label">Product long description <span
+                                                style="color:red;">*</span></label>
+                                        <textarea name="long_desc" class="form-control" id="pro_long_desc"
+                                            rows="5">{{ old('long_desc') }}</textarea>
                                         @error('long_desc')
-                                            <p class="text-danger">{{ $message }}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                    <script>
+                                        CKEDITOR.replace('pro_long_desc');
+                                    </script>
                                     <div class="mb-3">
                                         <label for="image">Product photos <span style="color:red;">*</span></label>
                                         <div class="gallery-upload-wrap">
@@ -167,7 +183,7 @@
                                             </label>
                                         </div>
                                         @error('photos')
-                                            <p class="text-danger">{{ $message }}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                     <div class="row" style="margin-top: 20px;">
@@ -206,41 +222,46 @@
                                     </script>
 
                                     <div class="mb-3">
-                                        <label for="video" class="form-label">Product video <small>(Youtube link)</small></label>
-                                        <input name="video" type="text" class="form-control" id="video"value="{{ old('video') }}">
+                                        <label for="video" class="form-label">Product video <small>(Youtube
+                                                link)</small></label>
+                                        <input name="video" type="text" class="form-control" id="video"
+                                            value="{{ old('video') }}">
                                         @error('video')
-                                            <p class="text-danger">{{ $message }}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="tags" class="form-label">Product tag <span style="color:red;">*</span></label>
+                                        <label for="tags" class="form-label">Product tag <span
+                                                style="color:red;">*</span></label>
                                         <div class="qtagselect isw360">
                                             <select name="tags[]" class="qtagselect__select" multiple>
-                                            @foreach ($tags as $tag)
+                                                @foreach ($tags as $tag)
                                                 <option value="{{ $tag->id }}" class="isblue">{{ $tag->name }}</option>
-                                            @endforeach
+                                                @endforeach
                                             </select>
                                         </div>
                                         <script>
                                             $('.qtagselect__select').tagselect();
                                         </script>
                                         @error('tags')
-                                            <p class="text-danger">{{ $message }}</p>
+                                        <p class="text-danger">{{ $message }}</p>
                                         @enderror
 
                                         <div class="mb-3 mt-2">
-                                            <label for="cat_1" class="form-label">Category <span style="color:red;">*</span></label>
-                                            <select name="cat_1" class="form-control main_cat_select" value="{{ old('cat_1') }}">
+                                            <label for="cat_1" class="form-label">Category <span
+                                                    style="color:red;">*</span></label>
+                                            <select name="cat_1" class="form-control main_cat_select"
+                                                value="{{ old('cat_1') }}">
                                                 <option value="">-Select category-</option>
                                                 @foreach ($cats_1 as $cat)
-                                                    <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('cat_1')
-                                                <p class="text-danger">{{ $message }}</p>
+                                            <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
@@ -250,20 +271,21 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="third_cat_id">Third category</label>
-                                                <select id="third_cat_id" name="cat_3"
-                                                    class="form-control third_cat_select">
-                                                </select>
+                                            <select id="third_cat_id" name="cat_3"
+                                                class="form-control third_cat_select">
+                                            </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="brand" class="form-label">Brand <span style="color:red;">*</span></label>
+                                            <label for="brand" class="form-label">Brand <span
+                                                    style="color:red;">*</span></label>
                                             <select name="brand" class="form-control">
                                                 <option value="">-Select brand-</option>
                                                 @foreach ($brands as $brand)
-                                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                                 @endforeach
                                             </select>
                                             @error('brand')
-                                                <p class="text-danger">{{ $message }}</p>
+                                            <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
@@ -272,10 +294,11 @@
                                                 <div class="input-group-text">
                                                     <span class="">৳</span>
                                                 </div>
-                                                <input type="number" class="form-control" name="price" value="{{ old('price') }}">
+                                                <input type="number" class="form-control" name="price"
+                                                    value="{{ old('price') }}">
                                             </div>
                                             @error('price')
-                                                <p class="text-danger">{{ $message }}</p>
+                                            <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div class="mb-3">
@@ -284,7 +307,8 @@
                                                 <div class="input-group-text">
                                                     <span class="">৳</span>
                                                 </div>
-                                                <input type="number" class="form-control" name="sell_price" value="{{ old('sell_price') }}">
+                                                <input type="number" class="form-control" name="sell_price"
+                                                    value="{{ old('sell_price') }}">
                                             </div>
                                         </div>
 

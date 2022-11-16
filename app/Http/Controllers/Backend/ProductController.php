@@ -270,9 +270,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-
-
-
         $name = '';
         $gallery = [];
         if ($request->hasFile('photos')) {

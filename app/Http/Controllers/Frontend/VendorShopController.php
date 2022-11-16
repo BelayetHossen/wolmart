@@ -14,26 +14,26 @@ class VendorShopController extends Controller
 {
 
 
-      // all vendor page load
-      public function vendorAll()
-      {
-          $vendors = Vendor::where('status', true)->where('trash', false)->get();
-          $url = url('');
-          return view('frontend.pages.all-vendor', [
-              'vendors'  => $vendors,
-              'url'  => $url,
-          ]);
-      }
+    // all vendor page load
+    public function vendorAll()
+    {
+        $vendors = Vendor::where('status', true)->where('trash', false)->get();
+        $url = url('');
+        return view('frontend.pages.all-vendor', [
+            'vendors'  => $vendors,
+            'url'  => $url,
+        ]);
+    }
 
 
 
     // one vendor page load
     public function vendor($username)
     {
-        $vendor = Vendor::where('username',$username)->first();
+        $vendor = Vendor::where('username', $username)->first();
         $v_products = Product::where('status', true)->where('vendor_id', $vendor->id)->get();
         $url = url('');
-        $imgPath = url('').'/storage';
+        $imgPath = url('') . '/storage';
 
         return view('frontend.pages.vendore.front.vendor', [
             'vendor'  => $vendor,
@@ -107,7 +107,7 @@ class VendorShopController extends Controller
 
 
         $store_name = Str::slug($request->store_name);
-        $store_url = '/agent/'.$store_name;
+        $store_url = '/agent/' . $store_name;
 
         $store_time = [
             'sat' => [
@@ -150,7 +150,6 @@ class VendorShopController extends Controller
         $data->update();
 
         return back()->with('msg', 'Your shop details has been updated successfully');
-
     }
     // account detals update system
     public function accountDetailsUpdate(Request $request)
@@ -225,7 +224,6 @@ class VendorShopController extends Controller
         $data->update();
 
         return back()->with('msg', 'Your account details has been updated successfully');
-
     }
 
 

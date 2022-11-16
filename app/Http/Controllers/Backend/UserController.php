@@ -608,7 +608,7 @@ class UserController extends Controller
         } else {
             $data->password = Hash::make($request->password);
             $data->update();
-            return back()->with('msg', 'You have been successfully changed');
+            return back()->with('msg', 'Your password has been successfully changed');
         }
     }
 }

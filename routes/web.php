@@ -290,6 +290,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/admin/order/customer/email', [OrderController::class, 'getCustomerEmail']);
     Route::get('/admin/order/product/get', [OrderController::class, 'getProduct']);
     Route::post('/admin/order/create', [OrderController::class, 'createOrder']);
+    Route::get('/admin/order/delete/{id}', [OrderController::class, 'deleteOrder']);
 });
 
 
@@ -360,6 +361,9 @@ Route::post('/customer/register', [CustomerController::class, 'store']);
 
 
 Route::get('/customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard')->middleware('loggedin.customer');
+Route::get('/customer/order/{id}', [CustomerController::class, 'orderView'])->middleware('loggedin.customer');
+Route::post('/customer/account/details', [CustomerController::class, 'accountDetailsUpdate'])->middleware('loggedin.customer');
+Route::post('/customer/password/change', [CustomerController::class, 'customerPasswordChange'])->middleware('loggedin.customer');
 
 
 /*
@@ -370,6 +374,8 @@ Route::get('/customer/dashboard', [CustomerController::class, 'index'])->name('c
 Route::get('/vendor/login', [VendoreController::class, 'vendorLogin'])->name('vendor.login')->middleware('vendor');
 Route::get('/vendor/dashboard', [VendoreController::class, 'dashboard'])->name('vendor.dashboard')->middleware('loggedin.vendor');
 Route::get('/vendor/products/all', [VendoreController::class, 'allProducts'])->name('vendor.products.all')->middleware('loggedin.vendor');
+Route::get('/vendor/orders', [VendoreController::class, 'allOrders'])->name('vendor.order.all')->middleware('loggedin.vendor');
+Route::get('/vendor/orders/all', [VendoreController::class, 'allOrdersTable'])->middleware('loggedin.vendor');
 Route::get('/vendor/product/create', [VendoreController::class, 'addProduct'])->name('vendor.add.product')->middleware('loggedin.vendor');
 Route::get('/vendor/product/edit/{slug}', [VendoreController::class, 'editProduct'])->name('vendor.edit.product')->middleware('loggedin.vendor');
 Route::post('/vendor/product/update', [VendoreController::class, 'updateProduct'])->name('vendor.update.product')->middleware('loggedin.vendor');
@@ -441,7 +447,6 @@ Route::get('/product/checkout', [CheckoutController::class, 'index'])->name('che
 |--------------------------------------------------------------------------
 */
 Route::post('/order/create', [OrderController::class, 'orderCreate']);
-Route::get('/product/order/{customer_id}/{orderNumber}', [OrderController::class, 'orderIndex'])->name('customer.product.order');
 
 
 

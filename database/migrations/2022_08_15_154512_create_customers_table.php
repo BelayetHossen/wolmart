@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('country');
             $table->string('region');
+            $table->string('zilla')->nullable();
+            $table->string('thana')->nullable();
+            $table->string('post')->nullable();
+            $table->string('post_code')->nullable();
             $table->string('password');
             $table->boolean('status');
             $table->boolean('trash');

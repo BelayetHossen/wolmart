@@ -12,16 +12,18 @@
     <link rel="icon" type="image/png" href="{{asset('')}}frontend/assets/images/icons/favicon.png" />
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('') }}backend/css/bootstrap1.min.css" />
+    <script src="{{ asset('') }}backend/js/jQuery-3.5.1.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
 
 
     {{-- tag select --}}
     <link rel="stylesheet" href="{{asset('')}}frontend/assets/custom/jquery.tagselect.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
     <script src="{{asset('')}}frontend/assets/custom/jquery.tagselect.js"></script>
 
     <!-- WebFont.js -->
@@ -38,19 +40,22 @@
         })(document);
     </script>
 
-    <link rel="preload" href="{{asset('')}}frontend/assets/vendor/fontawesome-free/webfonts/fa-regular-400.woff2" as="font" type="font/woff2"
-    crossorigin="anonymous">
-    <link rel="preload" href="{{asset('')}}frontend/assets/vendor/fontawesome-free/webfonts/fa-solid-900.woff2" as="font" type="font/woff2"
-    crossorigin="anonymous">
-    <link rel="preload" href="{{asset('')}}frontend/assets/vendor/fontawesome-free/webfonts/fa-brands-400.woff2" as="font" type="font/woff2"
-    crossorigin="anonymous">
-    <link rel="preload" href="{{asset('')}}frontend/assets/fonts/wolmart87d5.woff?png09e" as="font" type="font/woff" crossorigin="anonymous">
+    <link rel="preload" href="{{asset('')}}frontend/assets/vendor/fontawesome-free/webfonts/fa-regular-400.woff2"
+        as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="{{asset('')}}frontend/assets/vendor/fontawesome-free/webfonts/fa-solid-900.woff2"
+        as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="{{asset('')}}frontend/assets/vendor/fontawesome-free/webfonts/fa-brands-400.woff2"
+        as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="{{asset('')}}frontend/assets/fonts/wolmart87d5.woff?png09e" as="font" type="font/woff"
+        crossorigin="anonymous">
     <!-- Vendor CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('')}}frontend/assets/vendor/fontawesome-free/css/all.min.css">
     <!-- Plugins CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('')}}frontend/assets/vendor/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('')}}frontend/assets/vendor/magnific-popup/magnific-popup.min.css">
-    <link rel="stylesheet" type="text/css" href="{{asset('')}}frontend/assets/vendor/photoswipe/default-skin/default-skin.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="{{asset('')}}frontend/assets/vendor/magnific-popup/magnific-popup.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="{{asset('')}}frontend/assets/vendor/photoswipe/default-skin/default-skin.min.css" />
     <link rel="stylesheet" type="text/css" href="{{asset('')}}frontend/assets/vendor/photoswipe/photoswipe.min.css" />
     <!-- Link Swiper's CSS -->
     <link rel="stylesheet" href="{{asset('')}}frontend/assets/vendor/swiper/swiper-bundle.min.css">
@@ -98,24 +103,28 @@
 
     {{-- tag select --}}
     <style>
-
-        ol, ul, li {
+        ol,
+        ul,
+        li {
             list-style: none;
         }
-        .qtagselect_del_cross{
+
+        .qtagselect_del_cross {
             font-size: 18px;
             margin-top: -5px;
         }
-        .product-qty-form input{
-            padding:8px;
+
+        .product-qty-form input {
+            padding: 8px;
             /* display:block; */
-            border:1px solid #ccc;
+            border: 1px solid #ccc;
             width: 60px;
             height: 25px;
             padding-top: 10px;
             font-size: 18px;
         }
-        .product-qty-form a{
+
+        .product-qty-form a {
             /* height: 40px; */
             padding: 5px 10px;
             background-color: rgb(170, 170, 170);
@@ -124,26 +133,21 @@
             cursor: pointer;
             color: white;
         }
-        .product-qty-form a:hover{
+
+        .product-qty-form a:hover {
             background-color: #3C78B4;
             color: rgb(255, 255, 255);
         }
 
-        .product-pa-wrapper{
-            width: 100%!important;
+        .product-pa-wrapper {
+            width: 100% !important;
         }
-        .cart_btn{
+
+        .cart_btn {
             margin-top: 3px;
-            padding: 7px 30px!important;
+            padding: 7px 30px !important;
             border-redious: 3px;
         }
-
-
-
-
-
-
-
     </style>
 
 

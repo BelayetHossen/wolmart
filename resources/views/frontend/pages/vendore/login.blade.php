@@ -29,45 +29,53 @@
                         <div class="card-header">
                             <h4 class="text-center mt-2">Agent Login</h4>
                             @if (session('msg'))
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>Hello customer!</strong> {{ session('msg') }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Hello customer!</strong> {{ session('msg') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
                             @endif
                         </div>
                         <div class="card-body">
+
                             <form action="{{ url('/vendor/login') }}" method="post">
                                 @csrf
 
-
-
-
                                 <div class="form-group mb-2">
                                     <label for="email">Mobile number or email address *</label>
-                                    <input type="text" class="form-control" name="email" id="email"
-                                    @if (Cookie::has('vendor_email')) value="{{ Cookie::get('vendor_email') }}"@endif>
+                                    <input type="text" class="form-control" name="email" id="email">
+
                                     @error('email')
-                                        <p class="text-danger">{{ $message }}</p>
+                                    <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
+
+                                {{-- @if
+                                (Cookie::has('vendor_email')) value="{{ Cookie::get('vendor_email') }}" @endif --}}
 
 
                                 <div class="form-group mb-5">
                                     <label for="password">Password *</label>
-                                    <input type="text" class="form-control" name="password" id="password" @if (Cookie::has('vendor_password')) value="{{ Cookie::get('vendor_password') }}"@endif>
+                                    <input type="text" class="form-control" name="password" id="password">
                                     @error('password')
-                                        <p class="text-danger">{{ $message }}</p>
+                                    <p class="text-danger">{{ $message }}</p>
                                     @enderror
                                 </div>
 
+                                {{-- @if
+                                (Cookie::has('vendor_password')) value="{{ Cookie::get('vendor_password') }}"
+                                @endif --}}
+
                                 <div class="form-checkbox d-flex align-items-center justify-content-between py-3">
-                                    <input type="checkbox" class="custom-checkbox" id="remember" name="vendor_remember" @if (Cookie::has('vendor_password')) checked="checked"@endif>
+                                    <input type="checkbox" class="custom-checkbox" id="remember" name="vendor_remember"
+                                        @if (Cookie::has('vendor_password')) checked="checked" @endif>
                                     <label for="remember">Remember me</label>
                                     <a href="{{ route('password.reset.index') }}">Lost your password?</a>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                             </form>
-                            <p class="text-danger">Don't have an account? <a href="{{ route('vendor.register') }}"> Sign Up</a></p>
+                            <p class="text-danger">Don't have an account? <a href="{{ route('vendor.register') }}"> Sign
+                                    Up</a></p>
 
                             <p class="text-center">Sign in with social account</p>
                             <div class="social-icons social-icon-border-color d-flex justify-content-center">

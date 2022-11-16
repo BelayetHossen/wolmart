@@ -9,6 +9,7 @@ use App\Models\Backend\Product;
 use App\Models\Backend\Shipping;
 use App\Models\Frontend\Customer;
 use App\Http\Controllers\Controller;
+use App\Models\Backend\PaymentGateway;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cookie;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -90,6 +91,7 @@ class OrderController extends Controller
                                         <li><a class="dropdown-item" href="' . url('/admin/order/details') . '/' . $data->id . '">View details</a></li>
                                         <li><a class="dropdown-item" href="' . url('/admin/order/edit/') . '/' . $data->id . '">Edit</a></li>
                                         <li><a class="dropdown-item" href="#">Send email</a></li>
+                                        <li><a class="dropdown-item order_delete_btn" order_delete_id="' . $data->id . '" href="#">Delete</a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown">
@@ -234,8 +236,10 @@ class OrderController extends Controller
     {
         $customers = Customer::where('trash', false)->where('status', true)->get();
         $shippings = Shipping::where('trash', false)->where('status', true)->get();
+        $payments = PaymentGateway::all();
         return view('backend.pages.order.add', [
             'shippings' => $shippings,
+            'payments' => $payments,
         ]);
     }
     // get customer email list for add order
@@ -269,6 +273,7 @@ class OrderController extends Controller
                 'customer_email'    => 'required',
                 'product'    => 'required',
                 'shipping_id'    => 'required',
+                'payment_method'    => 'required',
                 'region'     => 'required',
                 'pickup_location'         => 'required',
             ],
@@ -276,6 +281,7 @@ class OrderController extends Controller
                 'customer_email.required'       => 'The email field is requred !',
                 'product.required'       => 'The product field is requred !',
                 'shipping_id.required'       => 'The shipping field is requred !',
+                'payment_method.required'       => 'The Payment field is requred !',
                 'region.required'       => 'The region field is requred !',
                 'pickup_location.required'       => 'The pickup location field is requred !',
             ]
@@ -326,11 +332,12 @@ class OrderController extends Controller
             $shipping_price = $shipping->khul_price;
         }
 
-        if (empty(Order::all())) {
+        if (count(Order::all()) < 1) {
             $order_number = Carbon::now()->format('jmY') . intval('0') + 1;
         } else {
             $order_number = intval(Order::max('order_number')) + 1;
         }
+
 
 
 
@@ -345,7 +352,7 @@ class OrderController extends Controller
             'total_qty'         => '1',
             'order_number'      => $order_number,
             'payment_status'    => '12',
-            'customer_name'     => $customer->firstname . ' ' . $customer->lastname,
+            'customer_name'     => $customer->f_name . ' ' . $customer->l_name,
             'customer_email'    => $customer->email,
             'customer_phone'    => $customer->phone,
             'customer_country'  => $customer->country,
@@ -355,7 +362,7 @@ class OrderController extends Controller
             'customer_post'     => $customer->post,
             'customer_vill'     => $customer->village,
             'customer_post_code' => $customer->post_code,
-            'shipping_name'     => $customer->firstname . ' ' . $customer->lastname,
+            'shipping_name'     => $customer->f_name . ' ' . $customer->l_name,
             'shipping_email'    => $customer->email,
             'shipping_phone'    => $customer->phone,
             'shipping_country'  => $customer->country,
@@ -371,6 +378,13 @@ class OrderController extends Controller
             'packaging'         => 'No',
         ]);
         return back()->with('msg', 'A new order added successfully');
+    }
+
+    // order delete
+    public function deleteOrder($id)
+    {
+        $data = Order::find($id);
+        $data->delete();
     }
 
 
@@ -508,41 +522,41 @@ class OrderController extends Controller
             ]);
         }
 
-        if ($request->shipping_checkbox == true) {
-            $this->validate(
-                $request,
-                [
-                    'firstname2'    => 'required',
-                    'lastname2'     => 'required',
-                    'phone2'         => 'required|min:11|numeric',
-                    'email2'         => 'required|email',
-                    'country2'       => 'required',
-                    'region2'        => 'required',
-                    'zilla2'        => 'required',
-                    'thana2'        => 'required',
-                    'post2'        => 'required',
-                    'village2'        => 'required',
-                    'post_code2'        => 'required',
-                    'pickup_location2'        => 'required',
-                ],
-                [
-                    'firstname2.required'       => 'The first name field is requred !',
-                    'lastname2.required'        => 'The last name field is requred !',
-                    'phone2.required'            => 'The Mobile number is requred !',
-                    'phone2.min'                 => 'The Mobile number is not correct !',
-                    'phone2.numeric'             => 'The Mobile number is not correct !',
-                    'email2.required'            => 'The email field is requred !',
-                    'email2.email'               => 'The email is not correct !',
-                    'country2.required'          => 'The country field is requred !',
-                    'region2.required'           => 'The region field is requred !',
-                    'zilla2.required'           => 'The zilla field is requred !',
-                    'thana2.required'           => 'The thana field is requred !',
-                    'post2.required'           => 'The post field is requred !',
-                    'village2.required'           => 'The village field is requred !',
-                    'pickup_location2.required'           => 'The pickup location field is requred !',
-                ]
-            );
-        }
+        // if ($request->shipping_checkbox == true) {
+        //     $this->validate(
+        //         $request,
+        //         [
+        //             'firstname2'    => 'required',
+        //             'lastname2'     => 'required',
+        //             'phone2'         => 'required|min:11|numeric',
+        //             'email2'         => 'required|email',
+        //             'country2'       => 'required',
+        //             'region2'        => 'required',
+        //             'zilla2'        => 'required',
+        //             'thana2'        => 'required',
+        //             'post2'        => 'required',
+        //             'village2'        => 'required',
+        //             'post_code2'        => 'required',
+        //             'pickup_location2'        => 'required',
+        //         ],
+        //         [
+        //             'firstname2.required'       => 'The first name field is requred !',
+        //             'lastname2.required'        => 'The last name field is requred !',
+        //             'phone2.required'            => 'The Mobile number is requred !',
+        //             'phone2.min'                 => 'The Mobile number is not correct !',
+        //             'phone2.numeric'             => 'The Mobile number is not correct !',
+        //             'email2.required'            => 'The email field is requred !',
+        //             'email2.email'               => 'The email is not correct !',
+        //             'country2.required'          => 'The country field is requred !',
+        //             'region2.required'           => 'The region field is requred !',
+        //             'zilla2.required'           => 'The zilla field is requred !',
+        //             'thana2.required'           => 'The thana field is requred !',
+        //             'post2.required'           => 'The post field is requred !',
+        //             'village2.required'           => 'The village field is requred !',
+        //             'pickup_location2.required'           => 'The pickup location field is requred !',
+        //         ]
+        //     );
+        // }
 
 
 

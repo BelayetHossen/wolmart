@@ -36,9 +36,39 @@ class DatabaseSeeder extends Seeder
         Role::create([
             'name'                  =>      'Super Admin',
             'slug'                  =>      'super-admin',
-            'permission'            =>      json_encode(['Dashboard','User','Product','Post','Settings','Order']),
+            'permission'            =>      json_encode(['Dashboard', 'User', 'Product', 'Post', 'Settings', 'Order']),
         ]);
 
+        $store_time = [
+            'sat' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'sun' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'mon' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'tue' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'wed' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'thu' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'fri' => [
+                'start' => '',
+                'end' => ''
+            ],
+        ];
         Vendor::create([
             'f_name'        => 'Biplob',
             'l_name'        => 'Hossen',
@@ -54,6 +84,7 @@ class DatabaseSeeder extends Seeder
             'post'          => 'Zamirdia',
             'post_code'     => '5240',
             'shop_addr'     => 'Square masterbari bazar',
+            'store_time'    => json_encode($store_time),
             'bank'          => '01727475354',
             'password'      => Hash::make(123456),
             'status'        => true,
@@ -70,10 +101,5 @@ class DatabaseSeeder extends Seeder
             'rang_price'         =>      110,
             'syl_price'          =>      120,
         ]);
-
-
-
-
-
     }
 }

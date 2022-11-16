@@ -148,7 +148,7 @@
             <i class="ti-angle-up"></i>
         </a>
     </div>
-    <script src="{{ asset('') }}backend/js/jquery1-3.4.1.min.js"></script>
+    {{-- <script src="{{ asset('') }}backend/js/jquery1-3.4.1.min.js"></script> --}}
     <script src="{{ asset('') }}backend/js/popper1.min.js"></script>
     <script src="{{ asset('') }}backend/js/bootstrap1.min.js"></script>
     <script src="{{ asset('') }}backend/js/metisMenu.js"></script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Backend\Brand;
+use App\Models\Backend\Order;
 use App\Models\Backend\Product;
 use App\Models\Frontend\Vendor;
 use App\Models\Backend\ProductTag;
@@ -86,6 +87,37 @@ class VendoreController extends Controller
             ]
         );
 
+        $store_time = [
+            'sat' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'sun' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'mon' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'tue' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'wed' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'thu' => [
+                'start' => '',
+                'end' => ''
+            ],
+            'fri' => [
+                'start' => '',
+                'end' => ''
+            ],
+        ];
+
 
         $store_name = Str::slug($request->store_name);
         $store_url = '/agent/' . $store_name;
@@ -106,6 +138,7 @@ class VendoreController extends Controller
             'post'          => $request->post,
             'post_code'     => $request->post_code,
             'shop_addr'     => $request->shop_addr,
+            'store_time'    => json_encode($store_time),
             'bank'          => $request->bank,
             'password'      => Hash::make($request->password),
             'status'        => false,
@@ -361,6 +394,8 @@ class VendoreController extends Controller
 
 
 
+
+
     // product edit page load
     public function editProduct($slug)
     {
@@ -481,7 +516,7 @@ class VendoreController extends Controller
 
 
 
-    // all products page load
+    // vendor account details page load
     public function account()
     {
         return view('frontend.pages.vendore.account');
@@ -492,20 +527,23 @@ class VendoreController extends Controller
     public function shopSettings()
     {
         $data = Vendor::where('id', Auth::guard('vendor')->user()->id)->first();
+        $vendor = Auth::guard('vendor')->user();
+        $store_time = json_decode($data->store_time);
 
-        if ($data->logo == null) {
+        if ($vendor->logo == null) {
             $logo = url('backend/img/profile/upload-logo.jpg');
         } else {
-            $logo = url('storage/vendors') . '/' . $data->logo;
+            $logo = url('storage/vendors') . '/' . $vendor->logo;
         }
-        if ($data->banner == null) {
+        if ($vendor->banner == null) {
             $banner = url('backend/img/profile/upload-banner.jpg');
         } else {
-            $banner = url('storage/vendors') . '/' . $data->banner;
+            $banner = url('storage/vendors') . '/' . $vendor->banner;
         }
 
         return view('frontend.pages.vendore.shop-settings', [
-            'data'          => $data,
+            'data'          => $vendor,
+            'store_time'    => $store_time,
             'logo'          => $logo,
             'banner'        => $banner,
         ]);
@@ -568,6 +606,95 @@ class VendoreController extends Controller
     }
 
 
+    // vendor all order page load
+    public function allOrders()
+    {
+        return view('frontend.pages.vendore.orders');
+    }
+
+    // all order load
+    public function allOrdersTable()
+    {
+        if (request()->ajax()) {
+
+            return datatables()->of(Order::latest()->get())
+
+                ->addColumn('sl', function ($data) {
+
+                    //SL no genarate
+                    $count = 1;
+                    return $count = $count + 1;
+                })
+                ->addColumn('contact', function ($data) {
+                    if ($data->customer_email) {
+                        $contact = $data->customer_email;
+                    } else {
+                        $contact = $data->customer_phone;
+                    }
+                    return $contact;
+                })
+                ->addColumn('ordernumber', function ($data) {
+
+                    return $data->order_number;
+                })
+                ->addColumn('qty', function ($data) {
+
+                    return $data->total_qty;
+                })
+                ->addColumn('price', function ($data) {
+
+                    return '৳ ' . $data->total_price;
+                })
+
+
+                ->addColumn('status', function ($data) {
+                    if ($data->status == 'On hold') {
+                        $btn = '<p class="badge bg-warning" style="font-size: 12px;">' . $data->status . '</p>';
+                    } else if ($data->status == 'Pending') {
+                        $btn = '<p class="badge bg-info" style="font-size: 12px;">' . $data->status . '</p>';
+                    } else if ($data->status == 'Processing') {
+                        $btn = '<p class="badge bg-secondary" style="font-size: 12px;">' . $data->status . '</p>';
+                    } else if ($data->status == 'Cancel') {
+                        $btn = '<p class="badge bg-danger" style="font-size: 12px;">' . $data->status . '</p>';
+                    } else if ($data->status == 'Complete') {
+                        $btn = '<p class="badge bg-success" style="font-size: 12px;">' . $data->status . '</p>';
+                    }
+
+                    return $btn;
+                })
+
+                ->addColumn('action', function ($data) {
+                    // $reeee = url('/order/edit/');
+                    $cont = '<div class="dropdown">
+                                    <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                    </button>
+                                    <ul class="dropdown-menu bg-info">
+                                        <li><a class="dropdown-item" href="' . url('/admin/order/details') . '/' . $data->id . '">View details</a></li>
+                                        <li><a class="dropdown-item" href="' . url('/admin/order/edit/') . '/' . $data->id . '">Edit</a></li>
+                                        <li><a class="dropdown-item" href="#">Send email</a></li>
+                                        <li><a class="dropdown-item order_delete_btn" order_delete_id="' . $data->id . '" href="#">Delete</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="dropdown">
+                                    <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Change status
+                                    </button>
+                                    <ul class="dropdown-menu bg-success">
+                                        <li><a value="On hold" order_status_id="' . $data->id . '" class="dropdown-item order_status_btn" href="#">On hold</a></li>
+                                        <li><a value="Pending" order_status_id="' . $data->id . '" class="dropdown-item order_status_btn" href="#">Pending</a></li>
+                                        <li><a value="Processing" order_status_id="' . $data->id . '" class="dropdown-item order_status_btn" href="#">Processing</a></li>
+                                        <li><a value="Cancel" order_status_id="' . $data->id . '" class="dropdown-item order_status_btn" href="#">Cancel</a></li>
+                                        <li><a value="Complete" order_status_id="' . $data->id . '" class="dropdown-item order_status_btn" href="#">Complete</a></li>
+                                    </ul>
+                                </div>';
+                    return  $cont;
+                })
+
+                ->rawColumns(['sl', 'contact', 'ordernumber', 'qty', 'price', 'status', 'action'])->make();
+        }
+    }
 
 
 
